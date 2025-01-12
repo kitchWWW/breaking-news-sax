@@ -9,15 +9,6 @@ let chunks = [];
 let statusDiv = document.getElementById("status")
 
 
-
-
-function playAudioWithKey(key){
-    setTimeout(function(){
-       checkFileExists(key); 
-   },3 * 1000)
-}
-
-
 function checkFileExists(timestamp) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -75,7 +66,7 @@ function startRecording1(){
                 mediaRecorder.pause()
                 document.getElementById("recordingStatus1").innerHTML = "done!"
                 document.getElementById("startRecording2").disabled = false
-            },1*1000) 
+            },3*1000) 
         })
         .catch(function(err) {
             console.log('The following getUserMedia error occurred: ' + err);
@@ -91,7 +82,7 @@ function startRecording2(){
         mediaRecorder.pause()
         document.getElementById("recordingStatus2").innerHTML = "done!"
         document.getElementById("startRecording3").disabled = false
-    },1*1000) 
+    },15*1000) 
 }
 
 
@@ -101,7 +92,7 @@ function startRecording3(){
     document.getElementById("recordingStatus3").style.display = "inline"
     setTimeout(function(){
         mediaRecorder.stop()
-        document.getElementById("recordingStatus3").innerHTML = "done! processing..."
+        document.getElementById("recordingStatus3").innerHTML = "done! uploading..."
         // document.getElementById("startRecording3").disabled = false
     },3*1000) 
 }
@@ -123,7 +114,8 @@ function sendAudioToServer(blob) {
     })
     .then(data => {
         console.log('Audio data successfully sent to server:', data);
-        playAudioWithKey(data)
+        document.getElementById("recordingStatus3").innerHTML = "done! submitted! Thank you!"
+
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
