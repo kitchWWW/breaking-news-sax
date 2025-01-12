@@ -8,12 +8,12 @@
 </head>
 <body id="bodyIsh">
 	<div id="junk">
-		<h1>Build-your-own sound collage!</h1>
+		<h1>Add your voice:</h1>
 
 		<div id="status"></div>
 		<ol>
 			<li>
-				Record yourself singing a single long "ooooo"
+				Record yourself saying your name
 				<br>
 				<button id="startRecording1" onclick="startRecording1()">record for 5 seconds</button>
 				<span id="recordingStatus1" style="display: none;">recording...</span>
@@ -21,9 +21,13 @@
 			</li>
 
 			<li>
-				Record yourself speaking for at least 10 seconds.
+				Record yourself reading the following paragraph:
+				<br><br>
+				<div style="width:400px;">
+				Once upon a time there was a little man sitting in a large tree. It was a huge christmas tree, and the little gnome was sad that there wasn't a regular tree outside for him to sit in.
+				</div>
 				<br>
-				<button id="startRecording2" onclick="startRecording2()" disabled="true">record for 10 seconds</button>
+				<button id="startRecording2" onclick="startRecording2()" disabled="true">record for 15 seconds</button>
 				<span id="recordingStatus2" style="display: none;">recording...</span>
 				<br><br>
 			</li>

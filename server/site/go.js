@@ -1,7 +1,7 @@
 console.log("loaded!")
 
-// let SERVER_URL = "https://wapi.brianellissound.com/sound-collage"
-let SERVER_URL = "http://0.0.0.0:3009/sound-collage"
+// let SERVER_URL = "https://wapi.brianellissound.com/breaking-news-sax"
+let SERVER_URL = "http://0.0.0.0:3011/breaking-news-sax"
 // Initialize variables
 let mediaRecorder;
 let chunks = [];
@@ -75,7 +75,7 @@ function startRecording1(){
                 mediaRecorder.pause()
                 document.getElementById("recordingStatus1").innerHTML = "done!"
                 document.getElementById("startRecording2").disabled = false
-            },5*1000) 
+            },1*1000) 
         })
         .catch(function(err) {
             console.log('The following getUserMedia error occurred: ' + err);
@@ -91,7 +91,7 @@ function startRecording2(){
         mediaRecorder.pause()
         document.getElementById("recordingStatus2").innerHTML = "done!"
         document.getElementById("startRecording3").disabled = false
-    },10*1000) 
+    },1*1000) 
 }
 
 
