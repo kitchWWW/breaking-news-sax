@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio Recorder</title>
+	<link rel="stylesheet" type="text/css" href="./my.css">
+</head>
+<body id="bodyIsh">
+	<div id="junk">
+		<h1>Build-your-own sound collage!</h1>
+
+		<div id="status"></div>
+		<ol>
+			<li>
+				Record yourself singing a single long "ooooo"
+				<br>
+				<button id="startRecording1" onclick="startRecording1()">record for 5 seconds</button>
+				<span id="recordingStatus1" style="display: none;">recording...</span>
+				<br><br>
+			</li>
+
+			<li>
+				Record yourself speaking for at least 10 seconds.
+				<br>
+				<button id="startRecording2" onclick="startRecording2()" disabled="true">record for 10 seconds</button>
+				<span id="recordingStatus2" style="display: none;">recording...</span>
+				<br><br>
+			</li>
+
+			<li>
+				Record yourself making a funny noise
+				<br>
+				<button id="startRecording3" onclick="startRecording3()" disabled="true">record for 3 seconds</button>
+				<span id="recordingStatus3" style="display: none;">recording...</span>
+				<br><br>
+			</li>
+		</ol>
+		<audio id="audioElement" controls style="display:none"></audio>
+		<audio id="audioElement2" controls style="display:none"></audio>
+		<br>
+		<br>
+	</div>
+	<br>
+	<script src="./go.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+html {
+background-color: white;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.focusArea{
+  height: 300px;
+  margin: 20px;
+  margin-top: 100px;
+  padding: 30px;
+  background: #333333;
+  text-align: center;
+  border-radius: 30px;
+  font-family: sans-serif;
+  font-size: 30px;
+}
