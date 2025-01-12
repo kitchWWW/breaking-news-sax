@@ -35,6 +35,11 @@ def listAllFiles():
     file_list = read_filelist()
     return {"files": file_list}, 200
 
+@app.route('/breaking-news-sax/create', methods=['POST'])
+def createNewScript():
+    print("creating script")
+    return "working on it!", 200
+
 @app.route('/breaking-news-sax/clear', methods=['POST'])
 def clearAllAudio():
     print("Clearing all files.")

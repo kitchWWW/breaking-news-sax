@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking News Sax Admin Page</title>
+    <style>
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recording List Viewer</h1>
+    <div id="file-list">
+        <!-- File names will be dynamically added here -->
+    </div>
+    <button id="clear-button">Clear All Files</button>
+    <button id="create-button">Create</button>
+    <div id="status">Status messages will appear here.</div>
+
+    <script>
+        const fileListDiv = document.getElementById('file-list');
+        const clearButton = document.getElementById('clear-button');
+        const createButton = document.getElementById('create-button');
+        const statusDiv = document.getElementById('status');
+
+        const API_BASE = '/breaking-news-sax';
+
+        // Function to update status messages
+        function updateStatus(message, success = true) {
+            statusDiv.textContent = message;
+            statusDiv.style.color = success ? 'green' : 'red';
+        }
+
+        // Function to fetch and update the file list
+        async function fetchFileList() {
+            try {
+                const response = await fetch(`${API_BASE}/list_all`);
+                if (response.ok) {
+                    const data = await response.json();
+                    fileListDiv.innerHTML = ''; // Clear current list
+                    if (data.files && data.files.length > 0) {
+                        data.files.forEach(file => {
+                            const fileItem = document.createElement('div');
+                            fileItem.textContent = file;
+                            fileListDiv.appendChild(fileItem);
+                        });
+                    } else {
+                        fileListDiv.textContent = 'No files available.';
+                    }
+                } else {
+                    updateStatus('Failed to fetch file list.', false);
+                }
+            } catch (error) {
+                updateStatus('Error fetching file list.', false);
+            }
+        }
+
+        // Function to confirm action
+        function confirmAction(message, callback) {
+            if (confirm(message)) {
+                callback();
+            }
+        }
+
+        // Function to clear all files
+        async function clearFiles() {
+            try {
+                const response = await fetch(`${API_BASE}/clear`, { method: 'POST' });
+                if (response.ok) {
+                    updateStatus('All files cleared successfully!');
+                    fetchFileList(); // Refresh the file list
+                } else {
+                    updateStatus('Failed to clear files.', false);
+                }
+            } catch (error) {
+                updateStatus('Error clearing files.', false);
+            }
+        }
+
+        // Function to create a new file (placeholder for actual functionality)
+        async function createFile() {
+            try {
+                const response = await fetch(`${API_BASE}/create`, { method: 'POST' });
+                if (response.ok) {
+                    updateStatus('File created successfully!');
+                    fetchFileList(); // Refresh the file list
+                } else {
+                    updateStatus('Failed to create file.', false);
+                }
+            } catch (error) {
+                updateStatus('Error creating file.', false);
+            }
+        }
+
+        // Set up event listeners
+        clearButton.addEventListener('click', () => {
+            confirmAction('Are you sure you want to clear all files?', clearFiles);
+        });
+
+        createButton.addEventListener('click', () => {
+            createFile
+        });
+
+        // Fetch file list every second
+        setInterval(fetchFileList, 1000);
+
+        // Initial fetch
+        fetchFileList();
+    </script>
+</body>
+</html>
