@@ -1,7 +1,13 @@
-console.log("loaded!")
+console.log("loaded!");
 
-let SERVER_URL = "https://wapi.brianellissound.com/breaking-news-sax"
-// let SERVER_URL = "http://0.0.0.0:3011/breaking-news-sax"
+// Automatically determine the server URL based on the environment
+const isDev = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const SERVER_URL = isDev 
+    ? "http://0.0.0.0:3011/breaking-news-sax" // Development URL
+    : "https://wapi.brianellissound.com/breaking-news-sax"; // Production URL
+
+console.log("Server URL:", SERVER_URL);
+
 // Initialize variables
 let mediaRecorder;
 let chunks = [];

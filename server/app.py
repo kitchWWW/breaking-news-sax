@@ -1,59 +1,61 @@
-print("hello?")
-from waitress import serve
-print("hello? 1")
-from flask import Flask, request, send_file, send_from_directory
-print("hello? 2")
-from flask_cors import CORS
-print("hello? 3")
-import time
-import threading
 import os
-print("hello? 4")
-# import collage  # Import the processing module
-# print("hello? 5")
-
-app = Flask(__name__)
-CORS(app)
+import threading
+import time
+from flask import Flask, request, send_from_directory
+from flask_cors import CORS
+from waitress import serve
 
 def current_milli_time():
     return str(round(time.time() * 1000))
 
-def testIt(arg):
-    print("hello!!!!")
+def append_to_filelist(file_name):
+    with open('filenames.txt', 'a') as file:
+        file.write(file_name + '\n')
 
-def run_process(filename):
-    # Call the process function from processing.py in a separate thread
-    thread = threading.Thread(target=collage.doForFile, args=(filename,))
-    thread.start()
+def read_filelist():
+    if not os.path.exists('filenames.txt'):
+        return []
+    with open('filenames.txt', 'r') as file:
+        return [line.strip() for line in file.readlines()]
 
-# @app.route('/breaking-news-sax/test')
-# def testFunction():
-#     return "hello, world"
-#     # return send_from_directory(os.getcwd(), filename)
+def clear_filelist():
+    if os.path.exists('filenames.txt'):
+        os.remove('filenames.txt')
+
+app = Flask(__name__)
+CORS(app)
 
 @app.route('/breaking-news-sax/<path:filename>')
 def serve_static_files(filename):
-    print("trying?")
     return send_from_directory(os.getcwd(), filename)
 
-@app.route('/breaking-news-sax/listAll')
+@app.route('/breaking-news-sax/list_all')
 def listAllFiles():
-    print("trying to list all things!!!!!!")
-    return "listing everything"
-
-@app.route('/breaking-news-sax/create', methods=['POST'])
-def createNewAudio():
-    print("trying to create the thing!!!!!!")
-    return "create!"
+    print("Listing all files.")
+    file_list = read_filelist()
+    return {"files": file_list}, 200
 
 @app.route('/breaking-news-sax/clear', methods=['POST'])
 def clearAllAudio():
-    print("trying to get rid of everything!!!!!!")
-    return "clear"
+    print("Clearing all files.")
+    file_list = read_filelist()
+
+    # Delete the files listed in filenames.txt
+    for file_name in file_list:
+        try:
+            if os.path.exists(file_name):
+                os.remove(file_name)
+        except Exception as e:
+            print(f"Failed to delete {file_name}: {e}")
+
+    # Clear the filenames.txt file
+    clear_filelist()
+
+    return {"message": "All files cleared."}, 200
 
 @app.route('/breaking-news-sax/upload_audio', methods=['POST'])
 def upload_audio():
-    print("yeeet")
+    print("Uploading audio.")
     if 'audio' not in request.files:
         return 'No audio file provided', 400
 
@@ -62,11 +64,17 @@ def upload_audio():
         return 'No selected file', 400
 
     file_prefix = current_milli_time()
-    file_name = 'uploads/'+file_prefix+'_in.ogg'
+    upload_dir = 'uploads'
+    os.makedirs(upload_dir, exist_ok=True)  # Ensure the uploads directory exists
+    file_name = os.path.join(upload_dir, f'{file_prefix}_in.ogg')
+
     audio_file.save(file_name)  # Save the audio file locally
 
-    return file_prefix, 200
+    # Append the filename to the list
+    append_to_filelist(file_name)
+
+    return {"file_prefix": file_prefix}, 200
 
 if __name__ == '__main__':
-    print("running!")
+    print("Running!")
     serve(app, host="0.0.0.0", port=3011)
