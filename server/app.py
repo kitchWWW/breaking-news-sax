@@ -47,7 +47,7 @@ def createNewAudio():
     return 1
 
 @app.route('/breaking-news-sax/clear', methods=['POST'])
-def createNewAudio():
+def clearAllAudio():
     print("trying to get rid of everything!!!!!!")
     return 1
 
