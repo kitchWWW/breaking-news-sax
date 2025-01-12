@@ -38,18 +38,18 @@ def serve_static_files(filename):
 
 @app.route('/breaking-news-sax/listAll')
 def listAllFiles():
-    print("trying to create the thing!!!!!!")
-    return 1
+    print("trying to list all things!!!!!!")
+    return "listing everything"
 
 @app.route('/breaking-news-sax/create', methods=['POST'])
 def createNewAudio():
     print("trying to create the thing!!!!!!")
-    return 1
+    return "create!"
 
 @app.route('/breaking-news-sax/clear', methods=['POST'])
 def clearAllAudio():
     print("trying to get rid of everything!!!!!!")
-    return 1
+    return "clear"
 
 @app.route('/breaking-news-sax/upload_audio', methods=['POST'])
 def upload_audio():
