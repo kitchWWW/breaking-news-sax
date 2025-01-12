@@ -69,4 +69,4 @@ def upload_audio():
 
 if __name__ == '__main__':
     print("running!")
-    serve(app, host="0.0.0.0", port=3010)
+    serve(app, host="0.0.0.0", port=3011)
